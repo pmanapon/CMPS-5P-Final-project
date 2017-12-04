@@ -47,6 +47,7 @@ def split(PlayCard1,PlayCard2):
 
 #def double():
 
+#def stand():
 
 
 def startRound():
@@ -73,6 +74,7 @@ def startRound():
         stand()     #call stand function
     elif res == 'D':
         double()    #call double function
+
 
 
 # call bet function
