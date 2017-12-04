@@ -49,7 +49,6 @@ def split(PlayCard1,PlayCard2):
 
 
 
-
 def startRound():
 
     newdeck = Deck()
@@ -64,15 +63,20 @@ def startRound():
     if PlayCard1[0] == PlayCard2[0]:
         print("Do you want to SPLIT hands? (Y/N)")
         if input().upper == 'Y':
-            split(PlayCard1,PlayCard2)
+            split(PlayCard1,PlayCard2)    #call split function
 
     print("Do you want to HIT or STAND or DOUBLE? (H/S/D)")
-    res = input()
-    if res == 'Y':
+    res = input().upper()
+    if res == 'H':
+        hit()  #call hit function
+    elif res == 'S':
+        stand()     #call stand function
+    elif res == 'D':
+        double()    #call double function
 
 
-
-startRound()
+# call bet function
+startRound() #start round
 
 
 
