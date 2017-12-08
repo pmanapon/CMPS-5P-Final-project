@@ -12,3 +12,22 @@ def enter_money():
         m=int(input())
     else:
         print("Good luck!")
+
+
+def doubleDown(poker, bet):
+    if poker.len() < 3:
+        poker.hit(random.randint(1, 13))
+        bet *= 2
+        return stand(poker, bet)
+    else:
+        print("Sorry! You cannot choose Double Down!")
+
+
+def exitGameWin():
+    print("The game is done! You WIN!")
+    exit()
+
+
+def exitGameLost():
+    print("The game is done! You LOST!")
+    exit()
