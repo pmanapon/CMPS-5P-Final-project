@@ -55,21 +55,18 @@ def getValue(card):
 
 #Sammy part
 def enter_money():
-    money = float(input("please enter the total amount of money you wish to play with: "))
-    if money<5:
+    money = int(input("Please enter the total amount of money you wish to play with: "))
+    while money<5:
         print("You do not have enough money to play with, please deposit more money!")
-        exit()
+        money = int(input("Please enter the total amount of money at least 5$: "))
     return money
 
 def enter_bet():
-    bet = int(input("please place a $5 minimum bet:"))
+    bet = int(input("Please place a $5 minimum bet: "))
     while bet<5:
         print("Please enter at least the minimum bet to play.")
-        bet=int(input())
-    while bet>150:
-        print("Your bet exceeds the maximum please enter a different amount")
-        bet=int(input())
-    print("Good luck!")
+        bet=int(input("bet: "))
+
     return bet
 
 #############################################################################
@@ -93,17 +90,57 @@ def hit():
     global PlaySum
     hitcard = newdeck.getCard(newdeck.cards)
     PlayCard.append(hitcard)  # call hit function
-    print("Your cards are " + PlayCard[0] , end="")
-    for i in range(1,len(PlayCard)):
-        print(" || "+ PlayCard[i], end="")
-    print("")
+    print("Your cards are " + str(PlayCard))#PlayCard[0] , end="")
+    # for i in range(1,len(PlayCard)):
+    #     print(" || "+ PlayCard[i], end="")
+    # print("")
     PlaySum += getValue(hitcard)
 
 
 #def double():
 
 #def stand():
+####################################################################################
+##########################################
+def drawCards(cards):
+    value=[]
+    suit=[]
+    for Acard in cards:
+        if Acard[0] == '1':
+            value.append("10")
+        else:
+            value.append(Acard[0]+".")
 
+        if "♠" in Acard:
+            suit.append("♠")
+        elif "♣" in Acard:
+            suit.append("♣")
+        elif "♥" in Acard:
+            suit.append("♥")
+        elif "♦" in Acard:
+            suit.append("♦")
+
+    n = len(cards)
+    for i in range(n):
+        print(".------.\t", end="")
+    print("")
+    for i in range(n):
+        print("|" + value[i] + "--. |\t", end="")
+    print("")
+    for i in range(n):
+        print("|" + suit[i] + ":\/: |\t", end="")
+    print("")
+    for i in range(n):
+        print("| :\/: |\t", end="")
+    print("")
+    for i in range(n):
+        print("| '--'"+ suit[i] +"|\t", end="")
+    print("")
+    for i in range(n):
+        print("`------'\t", end="")
+    print("")
+#########################################################
+####################################################
 
 def startRound():
     """Play one round and return win or lose"""
@@ -121,7 +158,7 @@ def startRound():
     # delay()
     print("One of Dealer's card is " + DealerCard1)
     # delay()
-    print("Your cards are " + PlayCard[0] + " || " + PlayCard[1])
+    print("Your cards are " + str(PlayCard))#PlayCard[0] + " || " + PlayCard[1])
 
 
 
@@ -131,18 +168,17 @@ def startRound():
             split(PlayCard1,PlayCard2)    #call split function
 
 
-
     print("Do you want to HIT or STAND or DOUBLE? (H/S/D)")
     res = input().upper()
     if res == 'H':
         PlayCard.append(newdeck.getCard(newdeck.cards)) #call hit function
         PlaySum += getValue(PlayCard[2])
-        print("Your cards are " + PlayCard[0] + " || " + PlayCard[1] + " || " + PlayCard[2])
+        print("Your cards are " + str(PlayCard))#PlayCard[0] + " || " + PlayCard[1] + " || " + PlayCard[2])
     elif res == 'D':
         double()
     elif res == 'S':
         stand()     #call stand function
-   #call double function
+                   #call double function
 
     if PlaySum > 21:
         print("BUST!!!")
@@ -153,6 +189,8 @@ def startRound():
         res = input().upper()
         if res == 'H':
             hit()
+        elif res == 'S':
+            stand()
 
     if PlaySum > 21:
         print("BUST!!!")
@@ -163,10 +201,15 @@ def startRound():
 
 
 
-startRound()
+#welcome()
+money = enter_money()
+bet = enter_bet()
+money -= bet
 
+print("Total money: {}  Bet: {}".format(money,bet))
 
-
+while money >= 0:
+    startRound()
 
 
 
