@@ -38,9 +38,8 @@ class Deck:
 # print(newdeck.cards)
 # card1 = newdeck.getCard(newdeck.cards)
 # print(card1)
-# print(newdeck.getValue(card1))
-#
-# print(newdeck.cards)
+
+
 
 def getValue(card):
     '''Return the value of card'''
@@ -91,15 +90,24 @@ def hit():
     hitcard = newdeck.getCard(newdeck.cards)
     PlayCard.append(hitcard)  # call hit function
     print("Your cards are " + str(PlayCard))#PlayCard[0] , end="")
-    # for i in range(1,len(PlayCard)):
-    #     print(" || "+ PlayCard[i], end="")
-    # print("")
+    drawCards(PlayCard)
     PlaySum += getValue(hitcard)
 
-
-#def double():
+def double():
+    global bet
+    global money
+    if money>=bet:
+        money -= bet
+        bet *= 2
+        print("Total money: {}  Bet: {}".format(money, bet))
+        hit()
+        stand()
+    else:
+        print("You do not have enough money to double. ")
 
 #def stand():
+
+#ASCII ART Functions
 ####################################################################################
 ##########################################
 def drawCards(cards):
@@ -142,24 +150,37 @@ def drawCards(cards):
 #########################################################
 ####################################################
 
+##Create a function to sum the value considering the value of Ace
+def point(cards_in):
+    cards = cards_in.copy()
+    A = 0
+    point = 0
+    for Acard in cards:
+        if Acard[0] = 'A':  #check no. of ace
+            A += 1
+        point += getValue(Acard)
+
+     while ()
+
+
+
+
 def startRound():
     """Play one round and return win or lose"""
     global newdeck
     newdeck = Deck()
     global PlayCard
     PlayCard = [newdeck.getCard(newdeck.cards),newdeck.getCard(newdeck.cards)]
-    DealerCard1 = newdeck.getCard(newdeck.cards)
-    # PlayCard1 = newdeck.getCard(newdeck.cards)
-    DealerCard2 = newdeck.getCard(newdeck.cards)
-    # PlayCard2 = newdeck.getCard(newdeck.cards)
+    global DealerCard
+    DealerCard = [newdeck.getCard(newdeck.cards),newdeck.getCard(newdeck.cards)]
     DelerSum = 0
     global PlaySum
     PlaySum = getValue(PlayCard[0])+getValue(PlayCard[1])
     # delay()
-    print("One of Dealer's card is " + DealerCard1)
+    print("One of Dealer's card is " + DealerCard[0])
     # delay()
     print("Your cards are " + str(PlayCard))#PlayCard[0] + " || " + PlayCard[1])
-
+    drawCards(PlayCard)
 
 
     if PlayCard[0][0] == PlayCard[1][0]:
@@ -174,10 +195,11 @@ def startRound():
         PlayCard.append(newdeck.getCard(newdeck.cards)) #call hit function
         PlaySum += getValue(PlayCard[2])
         print("Your cards are " + str(PlayCard))#PlayCard[0] + " || " + PlayCard[1] + " || " + PlayCard[2])
+        drawCards(PlayCard)
     elif res == 'D':
         double()
     elif res == 'S':
-        stand()     #call stand function
+        return stand()     #call stand function
                    #call double function
 
     if PlaySum > 21:
@@ -190,7 +212,8 @@ def startRound():
         if res == 'H':
             hit()
         elif res == 'S':
-            stand()
+            return stand()
+
 
     if PlaySum > 21:
         print("BUST!!!")
@@ -202,6 +225,8 @@ def startRound():
 
 
 #welcome()
+
+
 money = enter_money()
 bet = enter_bet()
 money -= bet
