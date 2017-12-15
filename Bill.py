@@ -91,6 +91,7 @@ def hit():
     PlayCard.append(hitcard)  # call hit function
     print("Your cards are " + str(PlayCard))#PlayCard[0] , end="")
     drawCards(PlayCard)
+    print("Total: " + str(point(PlayCard)))
     PlaySum += getValue(hitcard)
 
 def double():
@@ -105,7 +106,45 @@ def double():
     else:
         print("You do not have enough money to double. ")
 
-#def stand():
+def stand():
+    global PlayCard
+    global DealerCard
+    global newdeck
+    print("The dealer's cards are "+str(DealerCard))
+    Playpoint = point(PlayCard)
+    Dealpoint = point(DealerCard)
+
+    if Dealpoint > Playpoint:
+        print("You lose")
+        return "Lose"
+    elif Dealpoint == Playpoint:
+        print("Fair")
+        return "Fair"
+
+    while Dealpoint < 17:
+        print("Deal hitted more card...")
+        DealerCard.append(newdeck.getCard(newdeck.cards))
+        Dealpoint = point(DealerCard)
+        print("The dealer's cards are " + str(DealerCard))
+
+
+    if Dealpoint > 21:
+        print("Dealer's busted")
+        print("You win")
+        return "Win"
+    elif Dealpoint < Playpoint:
+        print("Win")
+        return "Win"
+    elif Dealpoint > Playpoint:
+        print("You lose")
+        return "Lose"
+    elif Dealpoint == Playpoint:
+        print("Fair")
+        return "Fair"
+
+
+
+
 
 #ASCII ART Functions
 ####################################################################################
@@ -156,11 +195,16 @@ def point(cards_in):
     A = 0
     point = 0
     for Acard in cards:
-        if Acard[0] = 'A':  #check no. of ace
+        if Acard[0] == 'A':  #check no. of ace
             A += 1
         point += getValue(Acard)
 
-     while ()
+    while (point<=11 and A>=1): #Ace can also be 11 so we add 10 if the sum is not over 21
+        point += 10
+        A -= 1
+
+    return point
+
 
 
 
@@ -181,6 +225,7 @@ def startRound():
     # delay()
     print("Your cards are " + str(PlayCard))#PlayCard[0] + " || " + PlayCard[1])
     drawCards(PlayCard)
+    print("Total: "+ str(point(PlayCard)))
 
 
     if PlayCard[0][0] == PlayCard[1][0]:
@@ -196,6 +241,8 @@ def startRound():
         PlaySum += getValue(PlayCard[2])
         print("Your cards are " + str(PlayCard))#PlayCard[0] + " || " + PlayCard[1] + " || " + PlayCard[2])
         drawCards(PlayCard)
+        print("Total: " + str(point(PlayCard)))
+
     elif res == 'D':
         double()
     elif res == 'S':
@@ -204,7 +251,7 @@ def startRound():
 
     if PlaySum > 21:
         print("BUST!!!")
-        return False
+        return "Lose"
 
     while PlaySum<=21:
         print("Do you want to HIT or STAND (H/S)")
@@ -217,7 +264,7 @@ def startRound():
 
     if PlaySum > 21:
         print("BUST!!!")
-        return False
+        return "Lose"
 
 
 
@@ -227,14 +274,16 @@ def startRound():
 #welcome()
 
 
+
+
 money = enter_money()
 bet = enter_bet()
 money -= bet
 
 print("Total money: {}  Bet: {}".format(money,bet))
 
-while money >= 0:
-    startRound()
+# while money >= 0:
+startRound()
 
 
 
