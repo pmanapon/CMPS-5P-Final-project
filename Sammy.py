@@ -15,6 +15,43 @@ def welcome():
     """)
 
 
+def tutorial():
+    print(input("Would you like a tutorial?:[y/n]"))
+    if "y":
+        print("""To begin playing you first enter the total amount of money that you
+        
+        would like to play with, next you will be prompted to place at least the minimum bet. 
+        
+        Once you place at least the minimum bet the dealer will distribute a maximum of two cards
+        
+         one card at a time, first you, then the dealer and so on. Once you have two cards you will
+         
+         be asked to either hit, stand, double down, or split depending on the cards you are dealt. 
+         
+         For any total amount of cards or combination you will be allowed to hit or stand; however if 
+         
+         you hit and total value of your cards exceeds 21 you will automatically lose. To split your cards,
+         
+         you must have two of the same cards and only once the cards have been dealt. If you would like to 
+         
+         double down it must be once the cards have been dealt and if you choose to you will recieve 1 
+         
+         additional card. The caveat is that you must match your inital bet to do this, however the plus side 
+         
+         is that you will get 4 times the payout if you win. If you decide to stay, the dealer will be allowed 
+         
+         to hit until his total cards have reached 17 or greater. Once he exceeds 17 he will no longer be allowed 
+         
+         to hit and at this point your total amount of cards will be compared to his. If yours are greater you win 
+         
+         and get an even payout, however if you lose the dealer takes your bet. On the chance that both you and the 
+         
+         dealer have the same cards, you both push and you neither lose or gain money. Now, have fun!
+         
+         """)
+
+
+
 
 
 
@@ -298,6 +335,7 @@ welcome()
 import time
 time.sleep(1)
 
+tutorial()
 
 
 
