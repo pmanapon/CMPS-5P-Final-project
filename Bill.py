@@ -2,7 +2,7 @@
 #Edited by Pattawut Manapongpun (Bill)
 
 #####################################################################################################
-# Main deck
+#Main deck
 #getCard function
 from random import randrange
 class Deck:
@@ -72,16 +72,137 @@ def enter_bet():
 def delay():
     import time
     print("loding....")
-    time.sleep(1)
+    for i in range(3):
+        print("$")
+        time.sleep(0.5)
 
 
-############################################################################
-def split(PlayCard1,PlayCard2):
+##S##########################################################################
+def split():
     print("Splitting...")
+    global PlayCard
     global newdeck
-    PlayCard1_1 = newdeck.getCard(newdeck.cards)
-    PlayCard2_1 = newdeck.getCard(newdeck.cards)
-    print("Hand1: " + PlayCard1 + " and " + PlayCard1_1 +" || Hand2: " + PlayCard2 + " and " + PlayCard2_1 )
+    global PlaySum
+    hand1 = [PlayCard[0], newdeck.getCard(newdeck.cards)]
+    hand2 = [PlayCard[1], newdeck.getCard(newdeck.cards)]
+
+    print("Hand1: " + str(hand1) + " and Hand2: " + str(hand2) )
+    print("Hand1: ")
+    drawCards(hand1)
+    print("Total: " + str(point(hand1)))
+    ####
+
+    PlayCard = hand1.copy()
+    PlaySum = getValue(hand1[0])+getValue(hand1[1])
+    while PlaySum<=21:
+        print("Hand1: Do you want to HIT or STAND (H/S)")
+        res = input().upper()
+        if res == 'H':
+            hit()
+        elif res == 'S':
+            break
+    bust=0
+    if PlaySum > 21:
+        print("Hand1 BUST!!!")
+        bust=1
+
+    hand1_c = PlayCard.copy()
+    ###
+    print("Hand2: ")
+    drawCards(hand2)
+    print("Total: " + str(point(hand2)))
+    PlayCard = hand2
+    PlaySum = getValue(hand2[0]) + getValue(hand2[1])
+    while PlaySum<=21:
+        print("Hand2: Do you want to HIT or STAND (H/S)")
+        res = input().upper()
+        if res == 'H':
+            hit()
+        elif res == 'S':
+            return splitStand(hand1_c,PlayCard)
+            break
+
+    if PlaySum > 21 and bust==1:
+        print("Hand2 BUST!!!")
+        print("LL")
+        return 'LL'
+    elif PlaySum > 21:
+        print("Hand2 BUST!!!")
+        return splitStand(hand1_c, PlayCard)
+
+
+def splitStand(hand1,hand2):
+    global DealerCard
+    global newdeck
+    print("The dealer's cards are "+str(DealerCard))
+    Hand1Point = point(hand1)
+    Hand2Point = point(hand2)
+    Dealpoint = point(DealerCard)
+
+    # if Dealpoint > Hand1Point:
+    #     print("Hand1: lose")
+    #     Hand1Status = 'L'
+    #
+    # elif Dealpoint == Hand1Point:
+    #     print("Hand1: Push")
+    #     Hand1Status = 'P'
+    #
+    # if Dealpoint > Hand2Point:
+    #     print("Hand2: lose")
+    #     Hand2Status = 'L'
+    #
+    # elif Dealpoint == Hand2Point:
+    #     print("Hand2: Push")
+    #     Hand2Status = 'P'
+
+    while Dealpoint < 17 and (Dealpoint < Hand1Point or Dealpoint < Hand2Point) :
+        print("Dealer hit more card...")
+        DealerCard.append(newdeck.getCard(newdeck.cards))
+        Dealpoint = point(DealerCard)
+        print("The dealer's cards are " + str(DealerCard))
+
+    if Dealpoint > 21:
+        print("Dealer's Busted")
+
+    if Hand1Point > 21:
+        Hand1Status = 'L'
+    elif Dealpoint > 21:
+        print("Hand1: Win")
+        Hand1Status = 'W'
+    elif Dealpoint < Hand1Point:
+        print("Hand1: Win")
+        Hand1Status = "W"
+    elif Dealpoint > Hand1Point:
+        print("Hand1: lose")
+        Hand1Status ="L"
+    elif Dealpoint == Hand1Point:
+        print("Hand1: Push")
+        Hand1Status ="P"
+
+
+
+    if Hand2Point > 21:
+        Hand2Status = 'L'
+    elif Dealpoint > 21:
+        Hand2Status = 'W'
+    elif Dealpoint < Hand2Point:
+        print("Hand2: Win")
+        Hand2Status ="W"
+    elif Dealpoint > Hand2Point:
+        print("Hand2: lose")
+        Hand2Status ="L"
+    elif Dealpoint == Hand2Point:
+        print("Hand2: Push")
+        Hand2Status ="P"
+
+    return Hand1Status+Hand2Status
+
+
+
+
+
+
+#######################################################
 
 def hit():
     global newdeck
@@ -97,32 +218,30 @@ def hit():
 def double():
     global bet
     global money
-    if money>=bet:
-        money -= bet
-        bet *= 2
-        print("Total money: {}  Bet: {}".format(money, bet))
-        hit()
-        stand()
-    else:
-        print("You do not have enough money to double. ")
+    money -= bet
+    bet *= 2
+    print("Total money: {}  Bet: {}".format(money, bet))
+    hit()
 
-def stand():
-    global PlayCard
+
+
+def stand(Playcard):
+    Checkcard = PlayCard.copy()
     global DealerCard
     global newdeck
     print("The dealer's cards are "+str(DealerCard))
-    Playpoint = point(PlayCard)
+    Playpoint = point(Checkcard)
     Dealpoint = point(DealerCard)
 
     if Dealpoint > Playpoint:
         print("You lose")
-        return "Lose"
+        return "L"
     elif Dealpoint == Playpoint:
-        print("Fair")
-        return "Fair"
+        print("Push")
+        return "P"
 
     while Dealpoint < 17:
-        print("Deal hitted more card...")
+        print("Dealer hit more card...")
         DealerCard.append(newdeck.getCard(newdeck.cards))
         Dealpoint = point(DealerCard)
         print("The dealer's cards are " + str(DealerCard))
@@ -131,16 +250,16 @@ def stand():
     if Dealpoint > 21:
         print("Dealer's busted")
         print("You win")
-        return "Win"
+        return "W"
     elif Dealpoint < Playpoint:
         print("Win")
-        return "Win"
+        return "W"
     elif Dealpoint > Playpoint:
         print("You lose")
-        return "Lose"
+        return "L"
     elif Dealpoint == Playpoint:
-        print("Fair")
-        return "Fair"
+        print("Push")
+        return "P"
 
 
 
@@ -211,28 +330,38 @@ def point(cards_in):
 
 def startRound():
     """Play one round and return win or lose"""
+    from time import sleep
     global newdeck
     newdeck = Deck()
     global PlayCard
     PlayCard = [newdeck.getCard(newdeck.cards),newdeck.getCard(newdeck.cards)]
     global DealerCard
     DealerCard = [newdeck.getCard(newdeck.cards),newdeck.getCard(newdeck.cards)]
-    DelerSum = 0
     global PlaySum
     PlaySum = getValue(PlayCard[0])+getValue(PlayCard[1])
-    # delay()
+    global bet
+    global money
+    # sleep(1)
     print("One of Dealer's card is " + DealerCard[0])
     drawCards([DealerCard[0]])
-    # delay()
+    # sleep(1)
     print("Your cards are " + str(PlayCard))#PlayCard[0] + " || " + PlayCard[1])
     drawCards(PlayCard)
     print("Total: "+ str(point(PlayCard)))
+
+    if point(PlayCard)==21:
+        print("BlackJack!")
+        return "BJ"
+
+    print("Do you want to SPLIT hands? (Y/N)")
+    if input().upper() == 'Y':
+        return split()  # call split
 
 
     if PlayCard[0][0] == PlayCard[1][0]:
         print("Do you want to SPLIT hands? (Y/N)")
         if input().upper() == 'Y':
-            split(PlayCard1,PlayCard2)    #call split function
+            split()    #call split function
 
 
     print("Do you want to HIT or STAND or DOUBLE? (H/S/D)")
@@ -245,14 +374,19 @@ def startRound():
         print("Total: " + str(point(PlayCard)))
 
     elif res == 'D':
-        double()
+        if money >= bet:
+            double()
+            return stand(PlayCard)
+        else:
+            print("You do not have enough money to double! ")
+
     elif res == 'S':
-        return stand()     #call stand function
+        return stand(PlayCard)     #call stand function
                    #call double function
 
     if PlaySum > 21:
         print("BUST!!!")
-        return "Lose"
+        return "L"
 
     while PlaySum<=21:
         print("Do you want to HIT or STAND (H/S)")
@@ -260,12 +394,12 @@ def startRound():
         if res == 'H':
             hit()
         elif res == 'S':
-            return stand()
+            return stand(PlayCard)
 
 
     if PlaySum > 21:
         print("BUST!!!")
-        return "Lose"
+        return "L"
 
 
 
@@ -273,19 +407,27 @@ def startRound():
 
 
 #welcome()
-
+while True:
+    print(startRound())
 
 
 
 money = enter_money()
 bet = enter_bet()
+while True:
+    print("Total money: {}  Bet: {}".format(money-bet,bet))
+    res = input("Do you want to Deal! or Reset your bet?[D/R]: ").upper()
+    if res == 'D':
+        break
+    else:
+        bet = enter_bet()
 money -= bet
 
-print("Total money: {}  Bet: {}".format(money,bet))
 
 # while money >= 0:
-startRound()
 
+delay()
+startRound()
 
 
 # main
