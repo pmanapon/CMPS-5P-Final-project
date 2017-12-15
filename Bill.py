@@ -222,6 +222,7 @@ def startRound():
     PlaySum = getValue(PlayCard[0])+getValue(PlayCard[1])
     # delay()
     print("One of Dealer's card is " + DealerCard[0])
+    drawCards([DealerCard[0]])
     # delay()
     print("Your cards are " + str(PlayCard))#PlayCard[0] + " || " + PlayCard[1])
     drawCards(PlayCard)
