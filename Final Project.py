@@ -5,9 +5,10 @@
 # Pattawut Manapongpun
 # Pengze Zheng
 # Xince Shi
-# Sammy
+# Saameyar Shamlou
 
-
+# Note: Since we don't have enough time to do GUI we decided to use ASCII art to draw cards instead of a plain text-based game
+#       in order to make our game more interesting and interactive. Hope you like our project!! We spent a lot of time to it :)
 
 #####################################################################################################
 # The rules of the game are written in tutorial function
@@ -54,6 +55,7 @@ def tutorial():
 # getCard function
 from random import randrange
 class Deck:
+    '''A deck of card'''
     def __init__(self):
         # ♢♡♠♣♥♦
         Card_Val = ['Ace', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
@@ -70,16 +72,7 @@ class Deck:
         deck.remove(randcard)
         return randcard
 
-    # def getValue(self, card):
-    #     '''Return the value of card'''
-    #     if card[0] == 'A':
-    #         return 1  # or 11
-    #     elif card[0] == 'J' or card[0] == 'Q' or card[0] == 'K':
-    #         return 10
-    #     elif card[0] == '1':
-    #         return 10
-    #     else:
-    #         return int(card[0])
+
 
 # Functions that calculate point
 #######################################################################
@@ -94,8 +87,7 @@ def getValue(card):
     else:
         return int(card[0])
 
-
-##Create a function to sum the value considering the value of Ace
+## This function sum the points considering the value of Ace wheter 1 or 11
 def point(cards_in):
     cards = cards_in.copy()
     A = 0
@@ -216,6 +208,7 @@ def split():
 
 
 def splitStand(hand1, hand2):
+    '''This function returns the result to split function'''
     global DealerCard
     global newdeck
     print("====================================================")
@@ -336,7 +329,6 @@ def stand(Playcard):
 
 # ASCII ART Functions
 ####################################################################################
-##########################################
 def drawCards(cards):
     '''Print the ascii art of the list of cards'''
     value = []
@@ -379,18 +371,31 @@ def drawCards(cards):
 ####################################################
 #These functions are for printing word in ascii art
 def welcome():
-
+    from time import sleep
     print("""
- /$$      /$$           /$$                                                   /$$$$$$$$              /$$$$$$$  /$$                     /$$                               /$$       /$$
-| $$  /$ | $$          | $$                                                  |__  $$__/             | $$__  $$| $$                    | $$                              | $$      | $$
-| $$ /$$$| $$  /$$$$$$ | $$  /$$$$$$$  /$$$$$$  /$$$$$$/$$$$   /$$$$$$          | $$  /$$$$$$       | $$  \ $$| $$  /$$$$$$   /$$$$$$$| $$   /$$ /$$  /$$$$$$   /$$$$$$$| $$   /$$| $$
-| $$/$$ $$ $$ /$$__  $$| $$ /$$_____/ /$$__  $$| $$_  $$_  $$ /$$__  $$         | $$ /$$__  $$      | $$$$$$$ | $$ |____  $$ /$$_____/| $$  /$$/|__/ |____  $$ /$$_____/| $$  /$$/| $$
-| $$$$_  $$$$| $$$$$$$$| $$| $$      | $$  \ $$| $$ \ $$ \ $$| $$$$$$$$         | $$| $$  \ $$      | $$__  $$| $$  /$$$$$$$| $$      | $$$$$$/  /$$  /$$$$$$$| $$      | $$$$$$/ |__/
-| $$$/ \  $$$| $$_____/| $$| $$      | $$  | $$| $$ | $$ | $$| $$_____/         | $$| $$  | $$      | $$  \ $$| $$ /$$__  $$| $$      | $$_  $$ | $$ /$$__  $$| $$      | $$_  $$     
-| $$/   \  $$|  $$$$$$$| $$|  $$$$$$$|  $$$$$$/| $$ | $$ | $$|  $$$$$$$         | $$|  $$$$$$/      | $$$$$$$/| $$|  $$$$$$$|  $$$$$$$| $$ \  $$| $$|  $$$$$$$|  $$$$$$$| $$ \  $$ /$$
-|__/     \__/ \_______/|__/ \_______/ \______/ |__/ |__/ |__/ \_______/         |__/ \______/       |_______/ |__/ \_______/ \_______/|__/  \__/| $$ \_______/ \_______/|__/  \__/|__/
-                                                                                                                                           /$$  | $$                          
-                                                                                                                                           |  $$$$$$/                                                                                                                                                                          \______/                                  
+    
+ /$$      /$$           /$$                                                   /$$$$$$$$       
+| $$  /$ | $$          | $$                                                  |__  $$__/       
+| $$ /$$$| $$  /$$$$$$ | $$  /$$$$$$$  /$$$$$$  /$$$$$$/$$$$   /$$$$$$          | $$  /$$$$$$ 
+| $$/$$ $$ $$ /$$__  $$| $$ /$$_____/ /$$__  $$| $$_  $$_  $$ /$$__  $$         | $$ /$$__  $$
+| $$$$_  $$$$| $$$$$$$$| $$| $$      | $$  \ $$| $$ \ $$ \ $$| $$$$$$$$         | $$| $$  \ $$
+| $$$/ \  $$$| $$_____/| $$| $$      | $$  | $$| $$ | $$ | $$| $$_____/         | $$| $$  | $$
+| $$/   \  $$|  $$$$$$$| $$|  $$$$$$$|  $$$$$$/| $$ | $$ | $$|  $$$$$$$         | $$|  $$$$$$/
+|__/     \__/ \_______/|__/ \_______/ \______/ |__/ |__/ |__/ \_______/         |__/ \______/ 
+    """)
+    sleep(1)
+    print("""
+ /$$$$$$$  /$$                     /$$                               /$$       /$$
+| $$__  $$| $$                    | $$                              | $$      | $$
+| $$  \ $$| $$  /$$$$$$   /$$$$$$$| $$   /$$ /$$  /$$$$$$   /$$$$$$$| $$   /$$| $$
+| $$$$$$$ | $$ |____  $$ /$$_____/| $$  /$$/|__/ |____  $$ /$$_____/| $$  /$$/| $$
+| $$__  $$| $$  /$$$$$$$| $$      | $$$$$$/  /$$  /$$$$$$$| $$      | $$$$$$/ |__/
+| $$  \ $$| $$ /$$__  $$| $$      | $$_  $$ | $$ /$$__  $$| $$      | $$_  $$     
+| $$$$$$$/| $$|  $$$$$$$|  $$$$$$$| $$ \  $$| $$|  $$$$$$$|  $$$$$$$| $$ \  $$ /$$
+|_______/ |__/ \_______/ \_______/|__/  \__/| $$ \_______/ \_______/|__/  \__/|__/
+                                       /$$  | $$                                  
+                                      |  $$$$$$/                                  
+                                       \______/                                   
     """)
 
 def bust():
@@ -416,7 +421,6 @@ def blackjack():
  |___/|____| /_/ \_\   \___| _|\_\\__/ /_/ \_\   \___| _|\_\((_) ((_)    
 
     """)
-
 
 ####################################################
 
@@ -534,11 +538,11 @@ while True:
     while money > 0:
         bet = enter_bet()
         print("Bet: {}  Total money: {}".format(bet, money - bet))
-        print("Do you want to Deal! now or Reset your bet? (D/R): ")
+        print("Do you want to Deal! now or Reset your bet or Exit game? (D/R/E): ")
         res = input().upper()
-        while res not in ['D', 'R']:
+        while res not in ['D', 'R', 'E']:
             print("Invalid input")
-            print("Do you want to Deal! now or Reset your bet? (D/R): ")
+            print("Do you want to Deal! now or Reset your bet or Exit game? (D/R/E): ")
             res = input().upper()
         if res == 'D':
             money -= bet
@@ -559,6 +563,8 @@ while True:
             sleep(2)
             delay()
             print("Total money: {}".format(money))
+        elif res == 'E':
+            exit()
 
     print("You have lost all the thing you had includes your money! Now, you are kicked out of the casino...")
     print("To restart game Press (R) or exit (E)")
