@@ -1,5 +1,11 @@
 # Final Project
+# CMPS-5P
 #
+# Member:
+# Pattawut Manapongpun
+# Pengze Zheng
+# Xince Shi
+# Sammy
 
 
 
