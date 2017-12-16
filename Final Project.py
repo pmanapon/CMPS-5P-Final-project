@@ -24,34 +24,20 @@ def tutorial():
 
     if res == "Y":
         print("""          >>> To begin playing you first enter the total amount of money that you
-
         would like to play with. Next you will be prompted to place at least the minimum bet. 
-
         Once you place at least the minimum bet, the dealer will distribute a maximum of two cards;
-
         first you, then the dealer and so on. Once you have two cards you will be asked to either hit, 
-
         stand, double down, or split depending on the cards you are dealt. For any total amount of cards 
-
         or combination you will be allowed to hit or stand; however, if you hit and the total value of your 
-
         cards exceeds 21 you will automatically lose (Bust). To split your cards, you must have two of the same 
-
         cards and only once the cards have been dealt. If you would like to double down it must be once the
-
-         cards have been dealt and if you choose to you will receive 1 additional card. The caveat is that you 
-
-         must match your inital bet to do this, however the plus side is that you will get 4 times the payout
-
-         if you win. If you decide to stand, the dealer will be allowed to hit until his total cards have reached
-
-         17 or greater. Once he exceeds 17 he will no longer be allowed to hit and at this point your total amount 
-
-         of cards will be compared to his. If yours are greater you win and get an even payout, however if you lose
-
-          the dealer takes your bet. On the chance that both you and the dealer have the same cards, you both push and 
-
-          you neither lose or gain money. Now, have fun!
+        cards have been dealt and if you choose to you will receive 1 additional card. The caveat is that you 
+        must match your initial bet to do this, however the plus side is that you will get 4 times the payout
+        if you win. If you decide to stand, the dealer will be allowed to hit until his total cards have reached
+        17 or greater. Once he exceeds 17 he will no longer be allowed to hit and at this point your total amount 
+        of cards will be compared to his. If yours are greater you win and get an even payout, however if you lose
+        the dealer takes your bet. On the chance that both you and the dealer have the same cards, you both push and 
+        you neither lose or gain money. Now, have fun!
 
          """)
         delay()
@@ -155,7 +141,7 @@ def enter_bet():
 def delay():
     '''For adding sleep time to make game more real'''
     import time
-    print("loding....")
+    print("loading....")
     for i in range(3):
         print("$")
         time.sleep(0.5)
