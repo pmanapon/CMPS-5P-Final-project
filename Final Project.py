@@ -118,10 +118,10 @@ def enter_money():
 def enter_bet():
     '''Return the input bet'''
     global money
-    bet = int(input("Please place a $5 minimum bet: "))
-    while bet < 5:
-        print("Please enter at least the minimum bet to play.")
-        bet = int(input("bet: "))
+    bet = int(input("Please place a bet: "))
+    # while bet < 5 or b%5 != 0:
+    #     print("Please enter at least the minimum bet to play.")
+    #     bet = int(input("bet: "))
     while bet > money:
         print("You can not bet more than the money you have.")
         bet = int(input("bet: "))
